@@ -17,9 +17,13 @@ class User < ApplicationRecord
 
   def next_question
     answered_ids = user_answers.map(&:question_id)
-    Question
-      .where("id not in (?)", answered_ids)
-      .order("id ASC")
-      .first
+    if answered_ids.length == 0
+      Question.first!
+    else
+      Question
+        .where("id not in (?)", answered_ids)
+        .order("id ASC")
+        .first
+    end
   end
 end
