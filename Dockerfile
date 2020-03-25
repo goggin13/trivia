@@ -1,13 +1,17 @@
 # Base our image on an official, minimal image of our preferred Ruby
-FROM ruby:2.7.0-slim
+FROM ruby:2.6.5-slim
 
 # Install essential Linux packages
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client libsqlite3-dev git nodejs
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client libsqlite3-dev git nodejs curl
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get install -y yarn
 
 RUN gem install rails -v 6.0.2
 
 # Prevent bundler warnings; ensure that the bundler version executed is >= that which created Gemfile.lock
-RUN gem install bundler
+RUN gem install bundler -v 2.1.2
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /var/www/trivia

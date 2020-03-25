@@ -1,24 +1,31 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+users
+  id
 
-Things you may want to cover:
+questions
+  text
+  answer_id
 
-* Ruby version
+answers
+  text
+  question_id
 
-* System dependencies
+user_answers
+  question_id
+  answer_id
+  correct
 
-* Configuration
 
-* Database creation
+GET /questions/next
+{
+  "id": 1,
+  "text": "what is my favorite color",
+  "answers": [
+    {"id": 1, "blue"},
+    {"id": 2, "red"},
+    {"id": 3, "green"},
+  ]
+}
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+POST /user_answers/<question-id>/<answer_id>
