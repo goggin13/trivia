@@ -1,0 +1,25 @@
+<div id="score">
+  <% if @total > 0 %>
+    <%= number_to_percentage(@correct / @total.to_f * 100, precision: 0) %>
+    <hr/>
+    <%= @correct %> / <%= @total %>
+  <% end %>
+</div>
+
+<p id="question">
+  <%= @question.prompt %>
+</p>
+
+<ul>
+<% @question.options.each do |option| %>
+  <li class="option" id="option-<%= option.id %>">
+    <%= link_to option.prompt, 
+          question_answer_path(
+            :question_id => @question.id,
+            :answer_id => option.id
+          ),
+          :method => :post
+    %>
+  </li>
+<% end %>
+</ul>

@@ -13,3 +13,39 @@
  *= require_tree .
  *= require_self
  */
+
+.option {
+  border: thin solid black;
+  margin: 15px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.option a {
+  text-decoration: none;
+  color: black;
+}
+
+.incorrect {
+  background-color: salmon;
+}
+
+.correct {
+  background-color: lightgreen;
+}
+
+#score {
+  float: right;
+  border: 4px solid lightblue;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+#question {
+  clear: both;
+}
+
+td {
+  padding: 10px;
+}

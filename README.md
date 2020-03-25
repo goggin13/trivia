@@ -18,6 +18,7 @@ user_answers
 
 round
   label
+  active
 
 round_questions
   round_id

@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_171149) do
+ActiveRecord::Schema.define(version: 2020_03_25_213203) do
+
+  create_table "options", force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.text "prompt"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "correct", default: false
+    t.index ["question_id"], name: "index_options_on_question_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "prompt"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_answers", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "question_id", null: false
+    t.integer "option_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["option_id"], name: "index_user_answers_on_option_id"
+    t.index ["question_id"], name: "index_user_answers_on_question_id"
+    t.index ["user_id"], name: "index_user_answers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -24,4 +50,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_171149) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "options", "questions"
+  add_foreign_key "user_answers", "options"
+  add_foreign_key "user_answers", "questions"
+  add_foreign_key "user_answers", "users"
 end
