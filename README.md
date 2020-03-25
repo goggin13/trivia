@@ -16,6 +16,12 @@ user_answers
   answer_id
   correct
 
+round
+  label
+
+round_questions
+  round_id
+  question_id
 
 GET /questions/next
 {
