@@ -9,6 +9,7 @@
       <th>Answered</th>
       <th>Correct</th>
       <th>Percentage</th>
+      <th>Avg Time</th>
     </tr>
 
     <% User.all.each do |user| %>
@@ -30,6 +31,10 @@
           <% if total > 0 %>
             <%= number_to_percentage(correct / total.to_f * 100, precision: 0) %>
           <% end %>
+        </td>
+
+        <td class="time">
+          <%= user.average_duration.round(3) %>s
         </td>
       </tr>
     <% end %>

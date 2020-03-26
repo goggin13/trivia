@@ -26,4 +26,8 @@ class User < ApplicationRecord
         .first
     end
   end
+
+  def average_duration
+    user_answers.inject(0) { |sum, el| sum + el.duration }.to_f / user_answers.size
+  end
 end

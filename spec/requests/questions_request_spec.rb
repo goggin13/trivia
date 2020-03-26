@@ -59,10 +59,6 @@ RSpec.describe "Questions", type: :request do
       end
     end
 
-    it "reports how many questions the user has answered correctly" do
-
-    end
-
     xit "shows your answer if you have already answered" do
       headers = { "ACCEPT" => "application/json" }
       post "/questions/#{@question.id}/answer/#{@options[1].id}", :headers => headers
@@ -88,13 +84,16 @@ RSpec.describe "Questions", type: :request do
     it "saves the attempt and returns correct, and the next question" do
       headers = { "ACCEPT" => "application/json" }
       expect do
-        post "/questions/#{@question.id}/answer/#{@options[0].id}", :headers => headers
+        post "/questions/#{@question.id}/answer/#{@options[0].id}",
+          :headers => headers,
+          :params => {:duration => 1.456}
       end.to change(UserAnswer, :count).by(1)
 
       expect(response.status).to eq(200)
       user_answer = UserAnswer.first!
       expect(user_answer.question_id).to eq(@question.id)
       expect(user_answer.option_id).to eq(@options[0].id)
+      expect(user_answer.duration).to eq(1.456)
 
       body = JSON.parse(response.body)
       expect(body["correct"]).to eq(false)

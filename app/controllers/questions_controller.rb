@@ -18,6 +18,7 @@ class QuestionsController < ApplicationController
       :question => @question,
       :option => @option,
       :user => current_user,
+      :duration => params[:duration]
     )
   end
 end

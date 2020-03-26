@@ -1,9 +1,15 @@
 
+startTime = 0;
+
 $(document).ready(function(){
+  startTime = Date.now();
+  timer = startTimer();
   $(".option").click(function(event) {
+    endTime = Date.now();
+    duration = (endTime - startTime) / 1000.0;
     $this = $(this);
     path = $(this).children("a").first().attr("href");
-    $.post(path, {}, function(data, status, jqXHR) {
+    $.post(path, {duration: duration}, function(data, status, jqXHR) {
       if (data.correct) {
         $this.addClass("correct");
       } else {
@@ -15,6 +21,8 @@ $(document).ready(function(){
       redirectToQuestion(data.next_question.id);
     });
 
+    clearInterval(timer);
+    $("#timer").html("Answered in " + duration + " seconds");
     return false;
   });
 });
@@ -25,4 +33,13 @@ function redirectToQuestion(questionId) {
     window.location.href = '/questions/' + questionId;
   }
   setTimeout(redirect, 2500);
+}
+
+function startTimer() {
+  setTimer = function () {
+    duration = Date.now() - startTime;
+    $("#timer").html((duration / 1000).toFixed(1));
+  }
+
+  return setInterval(setTimer, 150);
 }

@@ -34,4 +34,4 @@ RUN bundle install
 # Copy the Rails application into place
 COPY . .
 
-CMD bundle exec rails s -b 0.0.0.0
+CMD bundle && bundle exec rails s -b 0.0.0.0
