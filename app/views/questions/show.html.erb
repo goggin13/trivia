@@ -31,8 +31,17 @@
     </li>
   <% end %>
 <% else %>
+  <% found = false %>
   <% @question.options.each do |option| %>
-    <li class="option" id="option-<%= option.id %>">
+
+    <% if !found && !option.correct %>
+      <% found = true %>
+      <% extra_class = "default-choice" %>
+    <% else %>
+      <% extra_class = "" %>
+    <% end %>
+
+    <li class="option <%= extra_class %>" id="option-<%= option.id %>">
       <%= link_to option.prompt, question_answer_path(question_id: @question.id, answer_id: option.id) %>
     </li>
   <% end %>
