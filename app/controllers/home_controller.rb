@@ -6,7 +6,7 @@ class HomeController < ApplicationController
         @next_question = @next_round.next_question(current_user)
       end
 
-      @stats = User.all.map { |u| StatsService.user_stats(u) }
+      @stats = StatsService.all_user_stats
     end
   end
 end

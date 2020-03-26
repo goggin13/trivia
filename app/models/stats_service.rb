@@ -1,6 +1,6 @@
 class StatsService
   class UserStats
-    attr_accessor :correct, :completed, :duration, :email, :remaining
+    attr_accessor :correct, :completed, :duration, :email, :remaining, :rank
 
     def initialize(correct:, completed:, duration:, email:, remaining:)
       @correct = correct
@@ -20,6 +20,26 @@ class StatsService
 
     def total
       completed + remaining
+    end
+  end
+
+  def self.all_user_stats(round=nil)
+    User.all.map do |u|
+      if round.present?
+        StatsService.user_round_stats(u, round)
+      else
+        StatsService.user_stats(u)
+      end
+    end.sort do |a, b|
+      if a.percentage > b.percentage
+        -1
+      elsif b.percentage > a.percentage
+        1
+      else
+        a.duration <=> b.duration
+      end
+    end.each_with_index do |stat, index|
+      stat.rank = index + 1
     end
   end
 

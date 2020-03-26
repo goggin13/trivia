@@ -66,6 +66,7 @@ RSpec.describe "Questions", type: :feature do
       expect(page).to have_css("#result-bar .correct", count: 2)
       expect(page).to have_css("#result-bar .incorrect", count: 1)
       expect(page).to have_css("#result-bar .remaining", count: 1)
+      expect(page).to have_css("#result-bar .current", count: 1)
     end
 
     it "shows the round label and question count" do

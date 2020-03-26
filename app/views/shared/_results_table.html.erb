@@ -1,6 +1,7 @@
 <table>
   <tr>
     <th>User</th>
+    <th>Rank</th>
     <th>Correct</th>
     <th>Answered</th>
     <th>Remaining</th>
@@ -12,6 +13,10 @@
     <tr class="user">
       <td class="username">
         <%= user_stat.email %>
+      </td>
+
+      <td class="rank">
+        <%= user_stat.rank %>
       </td>
 
       <td class="correct-count">

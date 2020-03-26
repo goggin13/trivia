@@ -97,4 +97,46 @@ RSpec.describe StatsService, type: :model do
       expect(user_stats.remaining).to eq(1)
     end
   end
+
+  describe "#all_user_stats" do
+    it "returns stats for users sorted by percentage" do
+      best_user = FactoryBot.create(:user)
+      worst_user = FactoryBot.create(:user)
+      @questions.each do |question|
+        answer_correct(best_user, question)
+        answer_incorrect(worst_user, question)
+      end
+      answer_correct(@user, @questions[0])
+      answer_incorrect(@user, @questions[1])
+
+      all_user_stats = StatsService.all_user_stats
+
+      expect(all_user_stats[0].email).to eq(best_user.email)
+      expect(all_user_stats[1].email).to eq(@user.email)
+      expect(all_user_stats[2].email).to eq(worst_user.email)
+      expect(all_user_stats[0].rank).to eq(1)
+      expect(all_user_stats[1].rank).to eq(2)
+      expect(all_user_stats[2].rank).to eq(3)
+    end
+
+    it "breaks ties on average duration" do
+      best_user = FactoryBot.create(:user)
+      worst_user = FactoryBot.create(:user)
+      @questions.each do |question|
+        answer_correct(best_user, question, duration: 1.0)
+        answer_correct(worst_user, question, duration: 3.0)
+      end
+      answer_correct(@user, @questions[0], duration: 2.0)
+      answer_correct(@user, @questions[1], duration: 2.0)
+
+      all_user_stats = StatsService.all_user_stats
+
+      expect(all_user_stats[0].email).to eq(best_user.email)
+      expect(all_user_stats[1].email).to eq(@user.email)
+      expect(all_user_stats[2].email).to eq(worst_user.email)
+      expect(all_user_stats[0].rank).to eq(1)
+      expect(all_user_stats[1].rank).to eq(2)
+      expect(all_user_stats[2].rank).to eq(3)
+    end
+  end
 end
