@@ -69,8 +69,8 @@ body {
 .result-box .incorrect {
   background-color: salmon;
 }
-.result-box .remaining {
-  background-color: white;
+.result-box .current {
+  border: thin solid blue;
 }
 #result-bar {
   height: 15px;

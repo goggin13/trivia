@@ -11,8 +11,9 @@
       <div class="result-box <%= answer.option.correct? ? "" : "in" %>correct"> 
       </div>
     <% end %>
-    <% (@round.questions.count - @round.answered_questions(current_user).length).times do %>
-      <div class="result-box remaining"></div>
+    <% (@round.questions.count - @round.answered_questions(current_user).length).times do |i| %>
+      <div class="result-box <%= i == 0 ? "current" : "" %>">
+      </div>
     <% end %>
   </div>
 </h1>
