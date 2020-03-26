@@ -14,7 +14,7 @@ RSpec.describe Question, type: :model do
 
       expect do
         expect do
-          Question.create_from_json(params)
+          Question.create_from_json(params, FactoryBot.create(:round))
         end.to change(Question, :count).by(1)
       end.to change(Option, :count).by(4)
 
@@ -31,27 +31,11 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe "#next" do
-    it "returns the next question by id" do
-      q1 = FactoryBot.create(:question)
-      q2 = FactoryBot.create(:question)
-      q3 = FactoryBot.create(:question)
-
-      expect(q1.next).to eq(q2)
-      expect(q2.next).to eq(q3)
-      expect(q3.next).to eq(nil)
-    end
-  end
-
   describe "answered?" do
     before do
       @question = FactoryBot.create(:question)
       @option = FactoryBot.create(:option, :question => @question)
-      @user = User.create!(
-        :email => "matt@example.com",
-        :password => "password",
-        :password_confirmation => "password",
-      )
+      @user = FactoryBot.create(:user)
     end
 
     it "returns true if a user has answered" do

@@ -18,7 +18,7 @@ $(document).ready(function(){
       }
 
       $(".option").fadeOut(2500);
-      redirectToQuestion(data.next_question.id);
+      redirectTo(data.redirect);
     });
 
     clearInterval(timer);
@@ -27,10 +27,9 @@ $(document).ready(function(){
   });
 });
 
-function redirectToQuestion(questionId) {
+function redirectTo(nextHref) {
   redirect = function () {
-    console.log("next question!");
-    window.location.href = '/questions/' + questionId;
+    window.location.href = nextHref
   }
   setTimeout(redirect, 2500);
 }

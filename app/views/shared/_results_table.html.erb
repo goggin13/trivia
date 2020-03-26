@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <th>User</th>
+    <th>Correct</th>
+    <th>Answered</th>
+    <th>Remaining</th>
+    <th>Percentage</th>
+    <th>Avg Time</th>
+  </tr>
+
+  <% @stats.each do |user_stat| %>
+    <tr class="user">
+      <td class="username">
+        <%= user_stat.email %>
+      </td>
+
+      <td class="correct-count">
+        <%= user_stat.correct %>
+      </td>
+
+      <td class="answered">
+        <%= user_stat.completed %>
+      </td>
+
+      <td class="remaining">
+        <%= user_stat.remaining %>
+      </td>
+
+      <td class="percent">
+        <%= user_stat.percentage %>%
+      </td>
+
+      <td class="time">
+        <%= user_stat.duration %>s
+      </td>
+    </tr>
+  <% end %>
+
+</table>

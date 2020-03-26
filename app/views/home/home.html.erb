@@ -1,43 +1,14 @@
 <% if signed_in? %>
+  <h1>Leaderboard</h1>
+
   <p>
-    <%= link_to "Your Next Question", question_path(current_user.next_question), data: { turbolinks: false } %>
+    <% if @next_round %>
+      <%= link_to "Play #{@next_round.label}", question_path(@next_question), data: { turbolinks: false } %>
+    <% else %>
+        You have completed all of the rounds.
+    <% end %>
   </p>
 
-  <table>
-    <tr>
-      <th>User</th>
-      <th>Answered</th>
-      <th>Correct</th>
-      <th>Percentage</th>
-      <th>Avg Time</th>
-    </tr>
+  <%= render "shared/results_table" %>
 
-    <% User.all.each do |user| %>
-      <tr class="user">
-        <td class="username">
-          <%= user.email %>
-        </td>
-
-        <% correct, total = user.score %>
-        <td class="answered">
-          <%= total %>
-        </td>
-
-        <td class="correct">
-          <%= correct %>
-        </td>
-
-        <td class="percent">
-          <% if total > 0 %>
-            <%= number_to_percentage(correct / total.to_f * 100, precision: 0) %>
-          <% end %>
-        </td>
-
-        <td class="time">
-          <%= user.average_duration.round(3) %>s
-        </td>
-      </tr>
-    <% end %>
-
-  </table>
 <% end %>

@@ -1,28 +1,42 @@
 <div id="score">
-  <% if @total > 0 %>
-    <%= number_to_percentage(@correct / @total.to_f * 100, precision: 0) %>
-    <hr/>
-    <%= @correct %> / <%= @total %>
-  <% end %>
+  <%= number_to_percentage(@user_stats.percentage, precision: 1) %>
+  <hr/>
+  <%= @user_stats.correct %> / <%= @user_stats.completed %>
 </div>
+
+<h1>
+  <%= @round.label %> : <%= @user_stats.completed + 1 %> / <%= @user_stats.total %>
+  <div id="result-bar">
+    <% @round.answered_questions(current_user).each do |answer| %>
+      <div class="result-box <%= answer.option.correct? ? "" : "in" %>correct"> 
+      </div>
+    <% end %>
+    <% (@round.questions.count - @round.answered_questions(current_user).length).times do %>
+      <div class="result-box remaining"></div>
+    <% end %>
+  </div>
+</h1>
 
 <p id="question">
   <%= @question.prompt %>
 </p>
 
 <ul>
-<% @question.options.each do |option| %>
-  <li class="option" id="option-<%= option.id %>">
-    <%= link_to option.prompt, 
-          question_answer_path(
-            :question_id => @question.id,
-            :answer_id => option.id
-          ),
-          :method => :post
-    %>
-  </li>
-<% end %>
 
-<div id="timer"></div>
+<% if @question.answered?(current_user) %>
+  <% @question.options.each do |option| %>
+    <li class="<%= option.correct ? "" : "in"%>correct">
+      <%= option.prompt %>
+    </li>
+  <% end %>
+<% else %>
+  <% @question.options.each do |option| %>
+    <li class="option" id="option-<%= option.id %>">
+      <%= link_to option.prompt, question_answer_path(question_id: @question.id, answer_id: option.id) %>
+    </li>
+  <% end %>
+
+  <div id="timer"></div>
+<% end %>
 
 </ul>

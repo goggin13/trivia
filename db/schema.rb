@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_000226) do
+ActiveRecord::Schema.define(version: 2020_03_26_205913) do
 
   create_table "options", force: :cascade do |t|
     t.integer "question_id", null: false
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 2020_03_26_000226) do
     t.text "prompt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "round_id", null: false
+  end
+
+  create_table "round_questions", force: :cascade do |t|
+    t.integer "round_id", null: false
+    t.integer "question_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_round_questions_on_question_id"
+    t.index ["round_id"], name: "index_round_questions_on_round_id"
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.text "label"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_answers", force: :cascade do |t|
@@ -36,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_000226) do
     t.float "duration", default: 0.0
     t.index ["option_id"], name: "index_user_answers_on_option_id"
     t.index ["question_id"], name: "index_user_answers_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_user_answers_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_user_answers_on_user_id"
   end
 
@@ -52,6 +69,8 @@ ActiveRecord::Schema.define(version: 2020_03_26_000226) do
   end
 
   add_foreign_key "options", "questions"
+  add_foreign_key "round_questions", "questions"
+  add_foreign_key "round_questions", "rounds"
   add_foreign_key "user_answers", "options"
   add_foreign_key "user_answers", "questions"
   add_foreign_key "user_answers", "users"

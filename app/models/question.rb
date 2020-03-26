@@ -1,10 +1,14 @@
 class Question < ApplicationRecord
   has_many :options
+  belongs_to :round
   validates_presence_of :prompt
 
-  def self.create_from_json(params)
+  def self.create_from_json(params, round)
     params = params.symbolize_keys if params.respond_to?(:symbolize_keys)
-    question = Question.create!(:prompt => params[:question])
+    question = Question.create!(
+      :prompt => params[:question],
+      :round => round,
+    )
 
     ["A", "B", "C", "D"].each do |letter|
       Option.create!(
@@ -18,14 +22,7 @@ class Question < ApplicationRecord
   end
 
   def answer
-    options.where("correct").first!
-  end
-
-  def next
-    Question
-      .where("id > ?", id)
-      .order("id asc")
-      .first
+    options.correct.first!
   end
 
   def answered?(user)

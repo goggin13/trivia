@@ -6,6 +6,7 @@ users
 questions
   text
   answer_id
+  round_id
 
 answers
   text
@@ -18,11 +19,6 @@ user_answers
 
 round
   label
-  active
-
-round_questions
-  round_id
-  question_id
 
 GET /questions/next
 {
@@ -35,4 +31,10 @@ GET /questions/next
   ]
 }
 
-POST /user_answers/<question-id>/<answer_id>
+POST /questions/<question-id>/answer/<option_id>
+
+
+HOME page
+
+First time: Start Round I
+Returning to round: Complete Round I

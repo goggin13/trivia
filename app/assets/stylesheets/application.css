@@ -53,3 +53,25 @@ td {
 body {
   font-size: 2em;
 }
+
+.result-box {
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin: 5px;
+  padding: 5px;
+  border: thin solid black;
+}
+
+.result-box .correct {
+  background-color: lightgreen;
+}
+.result-box .incorrect {
+  background-color: salmon;
+}
+.result-box .remaining {
+  background-color: white;
+}
+#result-bar {
+  height: 15px;
+}

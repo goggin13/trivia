@@ -8,7 +8,8 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @correct, @total = current_user.score
+    @round = @question.round
+    @user_stats = StatsService.user_round_stats(current_user, @round)
   end
 
   def answer
@@ -20,5 +21,7 @@ class QuestionsController < ApplicationController
       :user => current_user,
       :duration => params[:duration]
     )
+    @round = @question.round
+    @next_question = @round.next_question(current_user)
   end
 end
