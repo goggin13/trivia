@@ -2,7 +2,8 @@ class Round < ApplicationRecord
   has_many :questions
 
   def answered_questions(user)
-    UserAnswer.where(
+    return @_answered_questions if defined?(@_answered_questions)
+    @_answered_questions = UserAnswer.where(
       :user_id => user.id,
       :question_id => questions.map(&:id)
     ).order("question_id ASC")
