@@ -40,6 +40,8 @@ class StatsService
       end
     end.each_with_index do |stat, index|
       stat.rank = index + 1
+    end.reject do |stat|
+      stat.completed == 0
     end
   end
 

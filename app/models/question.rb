@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
-  has_many :options
+  has_many :options, dependent: :destroy
+  has_many :user_answers, dependent: :destroy
   belongs_to :round
   validates_presence_of :prompt
 

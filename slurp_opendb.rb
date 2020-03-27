@@ -6,11 +6,10 @@ url = "https://opentdb.com/api.php?amount=#{results_to_pull}&type=multiple&categ
 results = JSON.parse(`curl -s '#{url}'`.chomp)
 
 round = Round.last!
-round_limit = 25
 results["results"].each do |result|
   puts result["category"]
 
-  if round.questions.count > round_limit
+  if round.questions.count > Round.questions_per_round
     round = Round.create!(:label => "Round #{Round.count + 1}")
     puts "Creating new round #{round.label}"
   end

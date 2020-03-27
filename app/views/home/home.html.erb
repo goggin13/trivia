@@ -5,4 +5,25 @@
 
   <%= render "shared/results_table" %>
 
+<% else %>
+  <h1>Welcome</h1>
+  <div id="welcome">
+    <%= image_tag(asset_path('question_mark.jpg')) %>
+    <p>
+      Rules
+      <ul>
+        <li>20 questions per round</li>
+        <li>10 seconds per question</li>
+        <li>Multiple Choice</li>
+        <li>Highest percentage wins</li>
+        <li>Ties broken on time</li>
+      </ul>
+    </p>
+    <p>
+      <%= link_to "Sign In", new_user_session_path %>
+    </p>
+    <p>
+      <%= link_to  "Sign Up", new_user_registration_path %>
+    </p>
+  </div>
 <% end %>

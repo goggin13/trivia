@@ -1,6 +1,6 @@
 
 startTime = 0;
-timeLimit = 6000;
+timeLimit = 2000;
 
 $(document).ready(function(){
   startTime = Date.now();

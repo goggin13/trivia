@@ -138,5 +138,10 @@ RSpec.describe StatsService, type: :model do
       expect(all_user_stats[1].rank).to eq(2)
       expect(all_user_stats[2].rank).to eq(3)
     end
+
+    it "does not include users who have answered no questions" do
+      all_user_stats = StatsService.all_user_stats
+      expect(all_user_stats.length).to eq(0)
+    end
   end
 end
