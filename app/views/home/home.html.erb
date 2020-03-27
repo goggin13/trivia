@@ -1,13 +1,7 @@
 <% if signed_in? %>
   <h1>Leaderboard</h1>
 
-  <p>
-    <% if @next_round %>
-      <%= link_to "Play #{@next_round.label}", question_path(@next_question), data: { turbolinks: false } %>
-    <% else %>
-        You have completed all of the rounds.
-    <% end %>
-  </p>
+  <p><%= next_round_link(current_user) %></p>
 
   <%= render "shared/results_table" %>
 

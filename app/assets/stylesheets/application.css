@@ -18,7 +18,7 @@
   border: thin solid black;
   margin: 15px;
   border-radius: 10px;
-  padding: 10px;
+  padding: 40px 10px;
   cursor: pointer;
 }
 
@@ -51,7 +51,7 @@ td {
 }
 
 body {
-  font-size: 2em;
+  font-size: 3em;
 }
 
 .result-box {
@@ -74,4 +74,17 @@ body {
 }
 #result-bar {
   height: 15px;
+}
+
+#timer {
+  text-align: center;
+}
+#timer.yellow {
+  color: orangered;
+  font-size: 3em;
+}
+#timer.red {
+  color: red;
+  font-weight: bolder;
+  font-size: 4em;
 }

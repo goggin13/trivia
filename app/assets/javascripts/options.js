@@ -1,16 +1,18 @@
 
 startTime = 0;
-timeLimit = 5000;
+timeLimit = 6000;
 
 $(document).ready(function(){
   startTime = Date.now();
   timer = startTimer();
   endTimer = setTimeout(timesUp, timeLimit);
   $(".option").click(function(event) {
-    endTime = Date.now();
-    duration = (endTime - startTime) / 1000.0;
     $this = $(this);
     path = $(this).children("a").first().attr("href");
+    $(".option").off("click");
+    $(".option a").attr("href", "#");
+    endTime = Date.now();
+    duration = (endTime - startTime) / 1000.0;
     $.post(path, {duration: duration}, function(data, status, jqXHR) {
       if (data.correct) {
         $this.addClass("correct");
@@ -19,13 +21,14 @@ $(document).ready(function(){
         $("#option-" + data.correct_option.id).addClass("correct");
       }
 
-      $(".option").fadeOut(2500);
+      $("#answers").fadeOut(2500);
       redirectTo(data.redirect);
     });
 
     clearInterval(timer);
     clearInterval(endTimer);
     $("#timer").html("Answered in " + duration + " seconds");
+    $("#timer").removeClass("yellow").removeClass("red");
     return false;
   });
 });
@@ -39,8 +42,14 @@ function redirectTo(nextHref) {
 
 function startTimer() {
   setTimer = function () {
-    duration = timeLimit - (Date.now() - startTime);
-    $("#timer").html((duration / 1000).toFixed(1));
+    remaining = timeLimit - (Date.now() - startTime);
+    $("#timer").html((remaining  / 1000).toFixed(1));
+    if (remaining  < timeLimit/3.0) {
+      $("#timer").removeClass("yellow")
+      $("#timer").addClass("red")
+    } else if (remaining < timeLimit/3.0 * 2) {
+      $("#timer").addClass("yellow")
+    }
   }
 
   return setInterval(setTimer, 150);
