@@ -11,13 +11,9 @@
 
   <body>
     <% if current_user %>
-      <%= link_to "Leaderboard", root_path %>
-
-        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% if current_user.email == "goggin13@gmail.com" %>
         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% end %>
-
     <% end %>
 
     <p class = "notice" ><%= notice %> </p>

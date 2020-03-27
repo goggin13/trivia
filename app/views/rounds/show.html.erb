@@ -1,5 +1,7 @@
-<h1><%= @round.label %></h1>
+<h1><%= @round.label %> Results</h1>
 
 <p><%= next_round_link(current_user) %></p>
+
+<p><%= link_to "All Time Leaderboard", root_path %></p>
 
 <%= render "shared/results_table" %>
