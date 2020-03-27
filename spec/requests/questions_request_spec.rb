@@ -9,11 +9,7 @@ RSpec.describe "Questions", type: :request do
   end
 
   before do
-    @user = User.create!(
-      :email => "matt@example.com",
-      :password => "password",
-      :password_confirmation => "password",
-    )
+    @user = FactoryBot.create(:user)
     sign_in @user
   end
 

@@ -2,10 +2,19 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :authentication_keys => [:username]
 
+  validates_presence_of :username
 
   has_many :user_answers
+
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
 
   def score(round)
     answered_in_round = user_answers.joins(:round).where("rounds.id = ?", round.id)

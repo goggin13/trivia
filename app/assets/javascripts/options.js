@@ -21,7 +21,7 @@ $(document).ready(function(){
         $("#option-" + data.correct_option.id).addClass("correct");
       }
 
-      $("#answers").fadeOut(2500);
+      $("#answers").fadeOut(1500);
       redirectTo(data.redirect);
     });
 

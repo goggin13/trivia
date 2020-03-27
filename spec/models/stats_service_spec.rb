@@ -111,9 +111,9 @@ RSpec.describe StatsService, type: :model do
 
       all_user_stats = StatsService.all_user_stats
 
-      expect(all_user_stats[0].email).to eq(best_user.email)
-      expect(all_user_stats[1].email).to eq(@user.email)
-      expect(all_user_stats[2].email).to eq(worst_user.email)
+      expect(all_user_stats[0].username).to eq(best_user.username)
+      expect(all_user_stats[1].username).to eq(@user.username)
+      expect(all_user_stats[2].username).to eq(worst_user.username)
       expect(all_user_stats[0].rank).to eq(1)
       expect(all_user_stats[1].rank).to eq(2)
       expect(all_user_stats[2].rank).to eq(3)
@@ -131,9 +131,9 @@ RSpec.describe StatsService, type: :model do
 
       all_user_stats = StatsService.all_user_stats
 
-      expect(all_user_stats[0].email).to eq(best_user.email)
-      expect(all_user_stats[1].email).to eq(@user.email)
-      expect(all_user_stats[2].email).to eq(worst_user.email)
+      expect(all_user_stats[0].username).to eq(best_user.username)
+      expect(all_user_stats[1].username).to eq(@user.username)
+      expect(all_user_stats[2].username).to eq(worst_user.username)
       expect(all_user_stats[0].rank).to eq(1)
       expect(all_user_stats[1].rank).to eq(2)
       expect(all_user_stats[2].rank).to eq(3)

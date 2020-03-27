@@ -1,12 +1,12 @@
 class StatsService
   class UserStats
-    attr_accessor :correct, :completed, :duration, :email, :remaining, :rank
+    attr_accessor :correct, :completed, :duration, :username, :remaining, :rank
 
-    def initialize(correct:, completed:, duration:, email:, remaining:)
+    def initialize(correct:, completed:, duration:, username:, remaining:)
       @correct = correct
       @completed = completed
       @duration = duration
-      @email = email
+      @username = username
       @remaining = remaining
     end
 
@@ -60,7 +60,7 @@ class StatsService
     end
 
     UserStats.new(
-      :email => user.email,
+      :username => user.username,
       :correct => result[0]["correct"] || 0,
       :completed => completed,
       :duration => result[0]["duration"] || 0,
