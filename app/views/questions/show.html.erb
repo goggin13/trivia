@@ -25,6 +25,9 @@
 <ul id="answers">
 
 <% if @question.answered?(current_user) %>
+
+  <p><%= next_round_link(current_user) %></p>
+
   <% @question.options.each do |option| %>
     <li class="<%= option.correct ? "" : "in"%>correct">
       <%= option.prompt %>

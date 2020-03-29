@@ -82,5 +82,14 @@ RSpec.describe "Questions", type: :feature do
 
       expect(page).to have_content("Round II : 4 / 4")
     end
+
+    it "shows a link to the next question if this question has been answered" do
+      next_question = FactoryBot.create(:question, round: @round)
+      answer_correct(@user, @question)
+      sign_in(@user)
+      visit question_path(@question)
+
+      expect(page).to have_link("Play Round II", href: question_path(next_question))
+    end
   end
 end
