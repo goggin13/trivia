@@ -6,7 +6,13 @@ $(document).ready(function(){
   startTime = Date.now();
   timer = startTimer();
   endTimer = setTimeout(timesUp, timeLimit);
+  alreadyClicked = false;
+
   $(".option").click(function(event) {
+    if (alreadyClicked) {
+      return false;
+    }
+    alreadyClicked = true;
     $this = $(this);
     path = $(this).children("a").first().attr("href");
     $(".option").off("click");
