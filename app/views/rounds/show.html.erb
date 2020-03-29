@@ -1,7 +1,8 @@
 <h1><%= @round.label %> Results</h1>
 
-<p><%= next_round_link(current_user) %></p>
-
-<p><%= link_to "Leaderboard", root_path %></p>
+<p>
+  <%= next_round_link(current_user) %> |
+  <%= link_to "Leaderboard", root_path %>
+</p>
 
 <%= render "shared/results_table" %>
