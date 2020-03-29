@@ -23,18 +23,8 @@ RSpec.describe StatsService, type: :model do
     end
 
     it "returns stats for a user who has no right answers" do
-      FactoryBot.create(
-        :user_answer,
-        :user => @user,
-        :option => @questions[0].options.incorrect.first,
-        :question => @questions[0]
-      )
-      FactoryBot.create(
-        :user_answer,
-        :user => @user,
-        :option => @questions[1].options.incorrect.first,
-        :question => @questions[1]
-      )
+      answer_incorrect(@user, @questions[0])
+      answer_incorrect(@user, @questions[1])
 
       user_stats = StatsService.user_stats(@user)
 
@@ -53,26 +43,33 @@ RSpec.describe StatsService, type: :model do
     end
 
     it "returns average duration" do
-      FactoryBot.create(
-        :user_answer,
-        :user => @user,
-        :question => @questions[0],
-        :duration => 1
-      )
-      FactoryBot.create(
-        :user_answer,
-        :user => @user,
-        :question => @questions[1],
-        :duration => 3
-      )
+      answer_correct(@user, @questions[0], :duration => 1)
+      answer_correct(@user, @questions[1], :duration => 3)
 
       user_stats = StatsService.user_stats(@user)
 
       expect(user_stats.duration).to eq(2)
     end
+
+    it "returns number of rounds completed" do
+      answer(@user, @questions[0])
+      answer(@user, @questions[1])
+
+      round = FactoryBot.create(:round)
+      questions = (0..1).map do
+        FactoryBot.create(:question, :round => round)
+      end
+      answer(@user, questions[0])
+
+      user_stats = StatsService.user_stats(@user)
+      expect(user_stats.rounds_completed).to eq(1)
+
+      user_stats = StatsService.user_stats(FactoryBot.create(:user))
+      expect(user_stats.rounds_completed).to eq(0)
+    end
   end
 
-  describe "#user_stats" do
+  describe "#user_round_stats" do
     it "returns stats for a user limited to one round" do
       round_two = FactoryBot.create(:round)
       (0..1).map do

@@ -2,9 +2,9 @@
   <tr>
     <th>User</th>
     <th>Rank</th>
-    <th>Correct</th>
-    <th>Answered</th>
-    <th>Remaining</th>
+    <% if @stats.first.try(:rounds_completed) %>
+      <th>Rounds Completed</th>
+    <% end %>
     <th>Percentage</th>
     <th>Avg Time</th>
   </tr>
@@ -19,17 +19,11 @@
         <%= user_stat.rank %>
       </td>
 
-      <td class="correct-count">
-        <%= user_stat.correct %>
-      </td>
-
-      <td class="answered">
-        <%= user_stat.completed %>
-      </td>
-
-      <td class="remaining">
-        <%= user_stat.remaining %>
-      </td>
+      <% if user_stat.rounds_completed %>
+        <td class="rounds_completed">
+          <%= user_stat.rounds_completed %>
+        </td>
+      <% end %>
 
       <td class="percent">
         <%= user_stat.percentage %>%

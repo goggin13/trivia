@@ -1,6 +1,14 @@
 class StatsService
   class UserStats
-    attr_accessor :correct, :completed, :duration, :username, :remaining, :rank
+    attr_accessor(
+      :correct,
+      :completed,
+      :duration,
+      :username,
+      :remaining,
+      :rank,
+      :rounds_completed,
+    )
 
     def initialize(correct:, completed:, duration:, username:, remaining:)
       @correct = correct
@@ -50,7 +58,27 @@ class StatsService
   end
 
   def self.user_stats(user)
-    _format_result(user, nil, _query(user))
+    user_stat = _format_result(user, nil, _query(user))
+    user_stat.rounds_completed = _rounds_completed(user)
+
+    user_stat
+  end
+
+  def self._rounds_completed(user)
+    sql = <<SQL
+    SELECT COUNT(distinct round_id) as count
+    FROM questions Q
+    LEFT JOIN user_answers A ON
+      A.question_id = Q.id
+      AND A.user_id = :user_id
+    WHERE
+      A.id is null
+SQL
+
+    query = ActiveRecord::Base.sanitize_sql([sql, :user_id => user.id])
+    rounds_remaining = ActiveRecord::Base.connection.execute(query)[0]["count"]
+
+    Round.count - rounds_remaining
   end
 
   def self._format_result(user, round, result)

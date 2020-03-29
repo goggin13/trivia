@@ -18,7 +18,7 @@ def answer_incorrect(user, question, options={})
   ))
 end
 
-def answer(user, question, params)
+def answer(user, question, params={})
   options = default = {
     user: user,
     question: question,
