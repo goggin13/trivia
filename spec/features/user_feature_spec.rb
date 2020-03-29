@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :feature do
+  before do
+    FactoryBot.create(:round)
+  end
+
   describe "sign up" do
     it "allows users to sign up" do
       visit new_user_registration_path

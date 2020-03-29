@@ -31,6 +31,16 @@ class StatsService
     end
   end
 
+  class BestRound
+    attr_accessor(:round, :user, :correct)
+
+    def initialize(round:, user:, correct:)
+      @round = round
+      @user = user
+      @correct = correct
+    end
+  end
+
   def self.all_user_stats(round=nil)
     User.all.map do |u|
       if round.present?
@@ -50,6 +60,36 @@ class StatsService
       stat.rank = index + 1
     end.reject do |stat|
       stat.completed == 0
+    end
+  end
+
+  def self.best_round
+    sql = <<SQL
+    SELECT A.user_id, Q.round_id, count(*) as count
+    FROM user_answers A
+    INNER JOIN questions Q ON
+      A.question_id = Q.id
+    INNER JOIN options O ON
+      A.option_id = O.id
+      and O.correct
+    GROUP BY 1,2
+    ORDER BY count(*) DESC
+    LIMIT 1
+SQL
+
+    best_round = ActiveRecord::Base.connection.execute(sql)
+    if best_round.length > 0
+      BestRound.new(
+        round: Round.find(best_round[0]["round_id"]),
+        user: User.find(best_round[0]["user_id"]),
+        correct: best_round[0]["count"]
+      )
+    else
+      BestRound.new(
+        round: Round.first!,
+        user: User.first!,
+        correct: 0,
+      )
     end
   end
 

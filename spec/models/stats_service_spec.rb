@@ -141,4 +141,32 @@ RSpec.describe StatsService, type: :model do
       expect(all_user_stats.length).to eq(0)
     end
   end
+
+  describe "best_round" do
+    it "returns the user with the best round" do
+      answer_incorrect(@user, @questions[0])
+      answer_incorrect(@user, @questions[1])
+
+      round = FactoryBot.create(:round)
+      questions = (0..1).map do
+        question = FactoryBot.create(:question, :round => round)
+        answer_correct(@user, question)
+      end
+      question = FactoryBot.create(:question, :round => round)
+      answer_incorrect(@user, question)
+
+      best_round = StatsService.best_round
+      expect(best_round.user.id).to eq(@user.id)
+      expect(best_round.round.id).to eq(round.id)
+      expect(best_round.correct).to eq(2)
+    end
+
+    it "returns a placeholder if there are no stats" do
+      best_round = StatsService.best_round
+
+      expect(best_round.user.id).to eq(@user.id)
+      expect(best_round.round.id).to eq(@round.id)
+      expect(best_round.correct).to eq(0)
+    end
+  end
 end
