@@ -3,6 +3,9 @@ startTime = 0;
 timeLimit = 10000;
 
 $(document).ready(function(){
+  if ($("#question").length == 0) {
+    return false;
+  }
   startTime = Date.now();
   timer = startTimer();
   endTimer = setTimeout(timesUp, timeLimit);
@@ -33,8 +36,9 @@ $(document).ready(function(){
 
     clearInterval(timer);
     clearInterval(endTimer);
-    $("#timer").html("Answered in " + duration + " seconds");
+    $("#timer").css("width", "90%").addClass("answered");
     $("#timer").removeClass("yellow").removeClass("red");
+    $("#timer").html("Answered in " + duration + " seconds");
     return false;
   });
 });
@@ -49,7 +53,8 @@ function redirectTo(nextHref) {
 function startTimer() {
   setTimer = function () {
     remaining = timeLimit - (Date.now() - startTime);
-    $("#timer").html((remaining  / 1000).toFixed(1));
+    percentage = remaining / timeLimit * 100;
+    $("#timer").css("width", percentage + "%");
     if (remaining  < timeLimit/3.0) {
       $("#timer").removeClass("yellow")
       $("#timer").addClass("red")

@@ -22,18 +22,21 @@
   <%= @question.prompt %>
 </p>
 
-<ul id="answers">
-
 <% if @question.answered?(current_user) %>
 
   <p><%= next_round_link(current_user) %></p>
 
+  <ul id="answers">
   <% @question.options.each do |option| %>
     <li class="<%= option.correct ? "" : "in"%>correct">
       <%= option.prompt %>
     </li>
   <% end %>
+  </ul>
+
 <% else %>
+
+  <ul id="answers">
   <% found = false %>
   <% @question.options.each do |option| %>
 
@@ -49,7 +52,6 @@
     </li>
   <% end %>
 
-  <div id="timer"></div>
+  </ul>
+<div id="timer"></div>
 <% end %>
-
-</ul>
