@@ -26,7 +26,7 @@
       <% end %>
 
       <td class="percent">
-        <%= user_stat.percentage %>%
+        <%= number_to_percentage(user_stat.percentage, precision: 1) %>
       </td>
 
       <td class="time">
