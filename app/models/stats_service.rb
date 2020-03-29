@@ -77,7 +77,7 @@ class StatsService
     LIMIT 1
 SQL
 
-    best_round = ActiveRecord::Base.connection.execute(sql)
+    best_round = ActiveRecord::Base.connection.execute(sql).to_a
     if best_round.length > 0
       BestRound.new(
         round: Round.find(best_round[0]["round_id"]),
