@@ -36,6 +36,16 @@ RSpec.describe "Users", type: :feature do
       expect(page).to have_content("Signed in successfully.")
     end
 
+    it "is case insensitive sign in" do
+      FactoryBot.create(:user, username: "test")
+      visit new_user_session_path
+
+      fill_in 'Username', with: "TEST"
+      click_button "Sign in"
+
+      expect(page).to have_content("Signed in successfully.")
+    end
+
     it "rejects empty user names" do
       visit new_user_session_path
       fill_in 'Username', with: ""
