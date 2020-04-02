@@ -10,9 +10,6 @@
     <% end %>
   </p>
 
-  <p>
-    Best Round: <%= @best_round.user.username %>, <%= @best_round.round.label %>: <%= @best_round.correct %> correct
-  </p>
   <%= render "shared/results_table" %>
 
 <% else %>

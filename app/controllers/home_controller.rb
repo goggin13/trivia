@@ -5,7 +5,6 @@ class HomeController < ApplicationController
     if signed_in?
       service = StatsService.new(@current_user, @game)
       @stats = StatsService.all_user_stats(@game)
-      @best_round = service.best_round
     end
   end
 
