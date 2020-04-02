@@ -1,5 +1,8 @@
 class Round < ApplicationRecord
-  has_many :questions
+  has_many :questions, dependent: :destroy
+  belongs_to :game
+	validates_presence_of :game_id
+  before_save :set_label
 
   def self.questions_per_round
     if Rails.env.production?
@@ -22,6 +25,14 @@ class Round < ApplicationRecord
 
     if question_ids_left.length > 0
       Question.find(question_ids_left[0])
+    end
+  end
+
+  private
+
+  def set_label
+    if self.label.nil?
+      self.label = "Round #{game.rounds.count + 1}"
     end
   end
 end

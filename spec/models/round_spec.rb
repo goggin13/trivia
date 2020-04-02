@@ -26,7 +26,10 @@ RSpec.describe Round, type: :model do
       round = FactoryBot.create(:round)
       question = FactoryBot.create(:question, round: round)
       next_question = FactoryBot.create(:question, round: round)
-      2.times { FactoryBot.create(:user_answer) }
+      2.times do
+        q = FactoryBot.create(:question)
+        answer(user, q)
+      end
       answer_correct(user, question)
 
       expect(round.next_question(user)).to eq(next_question)

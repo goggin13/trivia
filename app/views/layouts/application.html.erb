@@ -12,7 +12,7 @@
 
   <body>
     <% if current_user %>
-      <% if current_user.email == "goggin13@gmail.com" %>
+      <% if Rails.env.development? || current_user.email == "goggin13@gmail.com" %>
         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% end %>
     <% end %>

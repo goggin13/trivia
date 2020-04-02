@@ -16,26 +16,13 @@ class User < ApplicationRecord
     false
   end
 
-  def score(round)
-    answered_in_round = user_answers.joins(:round).where("rounds.id = ?", round.id)
-    [
-      answered_in_round.joins(:option).where("correct").count,
-      answered_in_round.count,
-    ]
-  end
-
-  def all_time_score
-    [
-      user_answers.joins(:option).where("correct").count,
-      user_answers.count,
-    ]
-  end
-
-  def next_round
+  def next_round(game)
     answered_ids = user_answers.map(&:question_id)
     answered_ids = -1 if answered_ids.length == 0
     question = Question
-      .where("id not in (?)", answered_ids)
+      .joins(:round)
+      .where("rounds.game_id = ?", game.id)
+      .where("questions.id not in (?)", answered_ids)
       .order("round_id ASC")
       .first
 

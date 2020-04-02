@@ -2,6 +2,13 @@
   <h1>Leaderboard</h1>
 
   <p><%= next_round_link(current_user) %></p>
+  <p id="other_game">
+    <% Game.all.each do |game| %>
+      <% if game.id != @game.id %>
+        <%= link_to "Try #{game.title}", game_path(game) %>
+      <% end %>
+    <% end %>
+  </p>
 
   <p>
     Best Round: <%= @best_round.user.username %>, <%= @best_round.round.label %>: <%= @best_round.correct %> correct
@@ -15,7 +22,7 @@
     <p>
       Rules
       <ul>
-        <li>20 questions per round</li>
+        <li>10 questions per round</li>
         <li>10 seconds per question</li>
         <li>Multiple Choice</li>
         <li>Highest percentage wins</li>
@@ -23,10 +30,10 @@
       </ul>
     </p>
     <p>
-      <%= link_to "Sign In", new_user_session_path %>
+      <%= link_to "Sign In", new_user_session_path(:game_id => @game.id) %>
     </p>
     <p>
-      <%= link_to  "Sign Up", new_user_registration_path %>
+      <%= link_to  "Sign Up", new_user_registration_path(:game_id => @game.id) %>
     </p>
   </div>
 <% end %>

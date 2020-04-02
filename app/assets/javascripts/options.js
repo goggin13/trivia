@@ -63,7 +63,7 @@ function startTimer() {
     }
   }
 
-  return setInterval(setTimer, 150);
+  return setInterval(setTimer, 300);
 }
 
 function timesUp() {

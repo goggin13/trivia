@@ -2,7 +2,7 @@
 
 <p>
   <%= next_round_link(current_user) %> |
-  <%= link_to "Leaderboard", root_path %>
+  <%= link_to "Leaderboard", game_path(@game) %>
 </p>
 
 <%= render "shared/results_table" %>

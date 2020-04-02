@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     post "answer/:answer_id", :to => "questions#answer", :as => "answer"
   end
 
+  get "/games/:game_id" => "home#home", :as => "game"
+
   resources "rounds", :only => ["show"]
 end
