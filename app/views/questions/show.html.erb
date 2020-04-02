@@ -38,7 +38,7 @@
 
   <ul id="answers">
   <% found = false %>
-  <% @question.options.each do |option| %>
+  <% @question.options.shuffle.each do |option| %>
 
     <% if !found && !option.correct %>
       <% found = true %>
